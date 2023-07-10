@@ -38,7 +38,7 @@ const otpTemplate = (otp) => {
 				font-size: 16px;
 				margin-bottom: 20px;
 			}
-	
+			
 			.cta {
 				display: inline-block;
 				padding: 10px 20px;
@@ -50,7 +50,7 @@ const otpTemplate = (otp) => {
 				font-weight: bold;
 				margin-top: 20px;
 			}
-	
+
 			.support {
 				font-size: 14px;
 				color: #999999;
@@ -66,8 +66,7 @@ const otpTemplate = (otp) => {
 	
 	<body>
 		<div class="container">
-		<a href="https://studynotion-edtech-project.vercel.app"><img class="logo"
-					src="https://i.ibb.co/jbrcPts/Logo-no-background.png" alt="Educator Logo"></a>
+		<img class="logo" src="https://i.ibb.co/jbrcPts/Logo-no-background.png" alt="Educator Logo">
 			<div class="message">OTP Verification Email</div>
 			<div class="body">
 				<p>Dear User,</p>
