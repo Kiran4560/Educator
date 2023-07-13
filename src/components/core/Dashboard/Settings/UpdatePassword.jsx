@@ -91,6 +91,34 @@ export default function UpdatePassword() {
                 </span>
               )}
             </div>
+            <div className="relative flex flex-col gap-2 lg:w-[48%]">
+              <label htmlFor="confirmNewPassword" className="lable-style">
+                New Password
+              </label>
+              <input
+                type={showNewPassword ? "text" : "password"}
+                name="confirmNewPassword"
+                id="confirmNewPassword"
+                placeholder="Confirm Password"
+                className="form-style"
+                {...register("confirmNewPassword", { required: true })}
+              />
+              <span
+                onClick={() => setShowNewPassword((prev) => !prev)}
+                className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+              >
+                {showNewPassword ? (
+                  <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+                ) : (
+                  <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+                )}
+              </span>
+              {errors.newPassword && (
+                <span className="-mt-1 text-[12px] text-yellow-100">
+                  Please enter your New Password.
+                </span>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex justify-end gap-2">
