@@ -1,49 +1,52 @@
-import { useEffect, useState } from "react"
-import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai"
-import { BsChevronDown } from "react-icons/bs"
-import { useSelector } from "react-redux"
-import { Link, matchPath, useLocation } from "react-router-dom"
+import React, { useEffect } from "react";
+import logo from "../../assets/Logo/Logo-Full-Light.png";
+import { Link, matchPath } from "react-router-dom";
+import { NavbarLinks } from "../../data/navbar-links";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { AiOutlineShoppingCart, AiOutlineMenu } from "react-icons/ai";
+import ProfileDropDown from "../core/Auth/ProfileDropDown";
+import { apiConnector } from "../../services/apiconnector";
+import { categories } from "../../services/apis";
+import { useState } from "react";
+import { ACCOUNT_TYPE } from "../../utils/constants";
 
-import logo from "../../assets/Logo/Logo-Full-Light.png"
-import { NavbarLinks } from "../../data/navbar-links"
-import { apiConnector } from "../../services/apiconnector"
-import { categories } from "../../services/apis"
-import { ACCOUNT_TYPE } from "../../utils/constants"
-import ProfileDropdown from "../core/Auth/ProfileDropDown"
+import { BsChevronDown } from "react-icons/bs";
+
 
 function Navbar() {
-  const { token } = useSelector((state) => state.auth)
-  const { user } = useSelector((state) => state.profile)
-  const { totalItems } = useSelector((state) => state.cart)
-  const location = useLocation()
+  console.log("Printing base url: ", process.env.REACT_APP_BASE_URL);
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+  const { totalItems } = useSelector((state) => state.cart);
+  const location = useLocation();
 
-  const [subLinks, setSubLinks] = useState([])
-  const [loading, setLoading] = useState(false)
+  const [subLinks, setSubLinks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    ;(async () => {
-      setLoading(true)
+    (async () => {
+      setLoading(true);
       try {
-        const res = await apiConnector("GET", categories.CATEGORIES_API)
-        setSubLinks(res.data.data)
+        const res = await apiConnector("GET", categories.CATEGORIES_API);
+        setSubLinks(res.data.data);
       } catch (error) {
-        console.log("Could not fetch Categories.", error)
+        console.log("Could not fetch Categories.", error);
       }
-      setLoading(false)
-    })()
-  }, [])
+      setLoading(false);
+    })();
+  }, []);
 
   // console.log("sub links", subLinks)
 
   const matchRoute = (route) => {
-    return matchPath({ path: route }, location.pathname)
-  }
+    return matchPath({ path: route }, location.pathname);
+  };
 
   return (
     <div
-      className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${
-        location.pathname !== "/" ? "bg-richblack-800" : ""
-      } transition-all duration-200`}
+      className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${location.pathname !== "/" ? "bg-richblack-800" : ""
+        } transition-all duration-200`}
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         {/* Logo */}
@@ -58,11 +61,10 @@ function Navbar() {
                 {link.title === "Catalog" ? (
                   <>
                     <div
-                      className={`group relative flex cursor-pointer items-center gap-1 ${
-                        matchRoute("/catalog/:catalogName")
+                      className={`group relative flex cursor-pointer items-center gap-1 ${matchRoute("/catalog/:catalogName")
                           ? "text-yellow-25"
                           : "text-richblack-25"
-                      }`}
+                        }`}
                     >
                       <p>{link.title}</p>
                       <BsChevronDown />
@@ -70,7 +72,7 @@ function Navbar() {
                         <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-richblack-5"></div>
                         {loading ? (
                           <p className="text-center">Loading...</p>
-                        ) : subLinks.length ? (
+                        ) : 3 ? (
                           <>
                             {subLinks
                               ?.filter(
@@ -98,11 +100,10 @@ function Navbar() {
                 ) : (
                   <Link to={link?.path}>
                     <p
-                      className={`${
-                        matchRoute(link?.path)
+                      className={`${matchRoute(link?.path)
                           ? "text-yellow-25"
                           : "text-richblack-25"
-                      }`}
+                        }`}
                     >
                       {link.title}
                     </p>
@@ -112,8 +113,8 @@ function Navbar() {
             ))}
           </ul>
         </nav>
-        {/* Login / Signup / Dashboard */}
-        <div className="hidden items-center gap-x-4 md:flex">
+        {/* Login./signup/dashboard */}
+        <div className="flex gap-x-4 items-center select-none">
           {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
             <Link to="/dashboard/cart" className="relative">
               <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
@@ -126,26 +127,26 @@ function Navbar() {
           )}
           {token === null && (
             <Link to="/login">
-              <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
+              <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
                 Log in
               </button>
             </Link>
           )}
           {token === null && (
             <Link to="/signup">
-              <button className="rounded-[8px] border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100">
-                Sign up
+              <button className="border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md">
+                Sign Up
               </button>
             </Link>
           )}
-          {token !== null && <ProfileDropdown />}
+          {token !== null && <ProfileDropDown />}
         </div>
         <button className="mr-4 md:hidden">
           <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
         </button>
       </div>
     </div>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;
