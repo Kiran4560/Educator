@@ -39,19 +39,7 @@ exports.courseEnrollmentEmail = (courseName, name) => {
                 font-size: 16px;
                 margin-bottom: 20px;
             }
-    
-            .cta {
-                display: inline-block;
-                padding: 10px 20px;
-                background-color: #FFD60A;
-                color: #000000;
-                text-decoration: none;
-                border-radius: 5px;
-                font-size: 16px;
-                font-weight: bold;
-                margin-top: 20px;
-            }
-    
+               
             .support {
                 font-size: 14px;
                 color: #999999;
@@ -75,7 +63,6 @@ exports.courseEnrollmentEmail = (courseName, name) => {
                     are excited to have you as a participant!</p>
                 <p>Please log in to your learning dashboard to access the course materials and start your learning journey.
                 </p>
-                <a class="cta" href="https://studynotion-edtech-project.vercel.app/dashboard">Go to Dashboard</a>
             </div>
             <div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
                     href="mailto:kiran2022003kumari@gmail.com">info@Educator.com</a>. We are here to help!</div>
